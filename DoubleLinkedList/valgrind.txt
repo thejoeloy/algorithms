@@ -1,0 +1,14 @@
+==1782095== Memcheck, a memory error detector
+==1782095== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1782095== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1782095== Command: ./double_linked_list_test
+==1782095== 
+==1782095== 
+==1782095== HEAP SUMMARY:
+==1782095==     in use at exit: 0 bytes in 0 blocks
+==1782095==   total heap usage: 4,000,003 allocs, 4,000,003 frees, 56,016,448 bytes allocated
+==1782095== 
+==1782095== All heap blocks were freed -- no leaks are possible
+==1782095== 
+==1782095== For lists of detected and suppressed errors, rerun with: -s
+==1782095== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

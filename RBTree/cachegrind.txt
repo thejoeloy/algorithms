@@ -1,0 +1,37 @@
+==1784234== Cachegrind, a cache and branch-prediction profiler
+==1784234== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==1784234== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1784234== Command: ./rb_tree_test
+==1784234== 
+--1784234-- warning: L3 cache found, using its data for the LL simulation.
+--1784234-- warning: specified LL cache: line_size 64  assoc 12  total_size 9,437,184
+--1784234-- warning: simulated LL cache: line_size 64  assoc 18  total_size 9,437,184
+==1784234== brk segment overflow in thread #1: can't grow to 0x485b000
+==1784234== (see section Limitations in user manual)
+==1784234== NOTE: further instances of this message will not be shown
+==1784234== 
+==1784234== Process terminating with default action of signal 27 (SIGPROF)
+==1784234==    at 0x4976A1A: __open_nocancel (open64_nocancel.c:39)
+==1784234==    by 0x498556F: write_gmon (gmon.c:370)
+==1784234==    by 0x4985DDE: _mcleanup (gmon.c:444)
+==1784234==    by 0x48A2494: __run_exit_handlers (exit.c:113)
+==1784234==    by 0x48A260F: exit (exit.c:143)
+==1784234==    by 0x4886D96: (below main) (libc_start_call_main.h:74)
+==1784234== 
+==1784234== I   refs:      852,176,443
+==1784234== I1  misses:          1,451
+==1784234== LLi misses:          1,438
+==1784234== I1  miss rate:        0.00%
+==1784234== LLi miss rate:        0.00%
+==1784234== 
+==1784234== D   refs:      478,432,765  (332,532,282 rd   + 145,900,483 wr)
+==1784234== D1  misses:     11,192,561  ( 10,917,537 rd   +     275,024 wr)
+==1784234== LLd misses:      1,320,283  (  1,066,513 rd   +     253,770 wr)
+==1784234== D1  miss rate:         2.3% (        3.3%     +         0.2%  )
+==1784234== LLd miss rate:         0.3% (        0.3%     +         0.2%  )
+==1784234== 
+==1784234== LL refs:        11,194,012  ( 10,918,988 rd   +     275,024 wr)
+==1784234== LL misses:       1,321,721  (  1,067,951 rd   +     253,770 wr)
+==1784234== LL miss rate:          0.1% (        0.1%     +         0.2%  )
+Profiling timer expired
+

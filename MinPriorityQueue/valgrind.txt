@@ -1,0 +1,105 @@
+==1787162== Memcheck, a memory error detector
+==1787162== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1787162== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1787162== Command: ./min_priority_queue_test
+==1787162== 
+==1787162== Conditional jump or move depends on uninitialised value(s)
+==1787162==    at 0x109AAD: MinHeapDecreaseKey (min_priority_queue.c:194)
+==1787162==    by 0x109CD6: MinHeapInsert (min_priority_queue.c:218)
+==1787162==    by 0x109E2D: TestLarge (min_priority_queue_test.c:67)
+==1787162==    by 0x109CF1: main (min_priority_queue_test.c:24)
+==1787162==  Uninitialised value was created by a heap allocation
+==1787162==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1787162==    by 0x109517: ResizeMinPriorityQueue (min_priority_queue.c:62)
+==1787162==    by 0x109C6E: MinHeapInsert (min_priority_queue.c:214)
+==1787162==    by 0x109E2D: TestLarge (min_priority_queue_test.c:67)
+==1787162==    by 0x109CF1: main (min_priority_queue_test.c:24)
+==1787162== 
+==1787162== Conditional jump or move depends on uninitialised value(s)
+==1787162==    at 0x109640: MinHeapify (min_priority_queue.c:100)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==  Uninitialised value was created by a heap allocation
+==1787162==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1787162==    by 0x109517: ResizeMinPriorityQueue (min_priority_queue.c:62)
+==1787162==    by 0x109C6E: MinHeapInsert (min_priority_queue.c:214)
+==1787162==    by 0x109E2D: TestLarge (min_priority_queue_test.c:67)
+==1787162==    by 0x109CF1: main (min_priority_queue_test.c:24)
+==1787162== 
+==1787162== Conditional jump or move depends on uninitialised value(s)
+==1787162==    at 0x10969E: MinHeapify (min_priority_queue.c:107)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==    by 0x109788: MinHeapify (min_priority_queue.c:118)
+==1787162==  Uninitialised value was created by a heap allocation
+==1787162==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1787162==    by 0x109517: ResizeMinPriorityQueue (min_priority_queue.c:62)
+==1787162==    by 0x109C6E: MinHeapInsert (min_priority_queue.c:214)
+==1787162==    by 0x109E2D: TestLarge (min_priority_queue_test.c:67)
+==1787162==    by 0x109CF1: main (min_priority_queue_test.c:24)
+==1787162== 
+==1787162== Conditional jump or move depends on uninitialised value(s)
+==1787162==    at 0x109640: MinHeapify (min_priority_queue.c:100)
+==1787162==    by 0x109A57: MinHeapExtractMin (min_priority_queue.c:185)
+==1787162==    by 0x109EC9: TestLarge (min_priority_queue_test.c:80)
+==1787162==    by 0x109CF1: main (min_priority_queue_test.c:24)
+==1787162==  Uninitialised value was created by a heap allocation
+==1787162==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1787162==    by 0x109517: ResizeMinPriorityQueue (min_priority_queue.c:62)
+==1787162==    by 0x109C6E: MinHeapInsert (min_priority_queue.c:214)
+==1787162==    by 0x109E2D: TestLarge (min_priority_queue_test.c:67)
+==1787162==    by 0x109CF1: main (min_priority_queue_test.c:24)
+==1787162== 
+==1787162== Conditional jump or move depends on uninitialised value(s)
+==1787162==    at 0x10969E: MinHeapify (min_priority_queue.c:107)
+==1787162==    by 0x109A57: MinHeapExtractMin (min_priority_queue.c:185)
+==1787162==    by 0x109EC9: TestLarge (min_priority_queue_test.c:80)
+==1787162==    by 0x109CF1: main (min_priority_queue_test.c:24)
+==1787162==  Uninitialised value was created by a heap allocation
+==1787162==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1787162==    by 0x109517: ResizeMinPriorityQueue (min_priority_queue.c:62)
+==1787162==    by 0x109C6E: MinHeapInsert (min_priority_queue.c:214)
+==1787162==    by 0x109E2D: TestLarge (min_priority_queue_test.c:67)
+==1787162==    by 0x109CF1: main (min_priority_queue_test.c:24)
+==1787162== 
+==1787162== 
+==1787162== Process terminating with default action of signal 27 (SIGPROF)
+==1787162==    at 0x498EA1A: __open_nocancel (open64_nocancel.c:39)
+==1787162==    by 0x499D56F: write_gmon (gmon.c:370)
+==1787162==    by 0x499DDDE: _mcleanup (gmon.c:444)
+==1787162==    by 0x48BA494: __run_exit_handlers (exit.c:113)
+==1787162==    by 0x48BA60F: exit (exit.c:143)
+==1787162==    by 0x489ED96: (below main) (libc_start_call_main.h:74)
+==1787162== 
+==1787162== HEAP SUMMARY:
+==1787162==     in use at exit: 17,272 bytes in 2 blocks
+==1787162==   total heap usage: 9,883,857 allocs, 9,883,855 frees, 199,552,724 bytes allocated
+==1787162== 
+==1787162== LEAK SUMMARY:
+==1787162==    definitely lost: 0 bytes in 0 blocks
+==1787162==    indirectly lost: 0 bytes in 0 blocks
+==1787162==      possibly lost: 0 bytes in 0 blocks
+==1787162==    still reachable: 17,272 bytes in 2 blocks
+==1787162==         suppressed: 0 bytes in 0 blocks
+==1787162== Reachable blocks (those to which a pointer was found) are not shown.
+==1787162== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1787162== 
+==1787162== For lists of detected and suppressed errors, rerun with: -s
+==1787162== ERROR SUMMARY: 136182 errors from 5 contexts (suppressed: 0 from 0)

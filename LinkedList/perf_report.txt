@@ -1,0 +1,26 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 1K of event 'cycles:P'
+# Event count (approx.): 1079305769
+#
+# Overhead  Command          Shared Object      Symbol                       
+# ........  ...............  .................  .............................
+#
+    98.54%  linked_list_tes  linked_list_test   [.] DeleteLast
+     0.45%  linked_list_tes  libc.so.6          [.] __mcount_internal
+     0.38%  linked_list_tes  linked_list_test   [.] CreateNode
+     0.19%  linked_list_tes  libc.so.6          [.] _int_free
+     0.16%  linked_list_tes  [kernel.kallsyms]  [k] mas_next_slot
+     0.09%  linked_list_tes  [kernel.kallsyms]  [k] syscall_return_via_sysret
+     0.09%  linked_list_tes  libc.so.6          [.] cfree@GLIBC_2.2.5
+     0.09%  linked_list_tes  linked_list_test   [.] free@plt
+     0.01%  perf-exec        [kernel.kallsyms]  [k] end_repeat_nmi
+     0.00%  perf-exec        [kernel.kallsyms]  [k] native_write_msr
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

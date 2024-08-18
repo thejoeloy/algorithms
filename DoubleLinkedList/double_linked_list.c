@@ -1,0 +1,205 @@
+/* double_linked_list.c
+ * This file implements a double linked list. This implementation works for
+ * generic data types, which can be copied into the val entry of a given node.
+ * The double linked list improves upon the single linked list in its ability
+ * to insert/delete at both the front and the end of the list in O(1) time.
+ * Insertions/deletions/gets/sets still occur at O(1) time. The improvement in
+ * the ability to insert/delete at the end comes at the expense of additional
+ * memory usage
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "double_linked_list.h"
+
+/* DoubleLinkedList* BuildDoubleLinkedList()
+ * Allocates memory for a double linked list.
+*/
+DoubleLinkedList* BuildDoubleLinkedList(int elemSize, void (*print)(const void*)) {
+    DoubleLinkedList* dll = (DoubleLinkedList*)malloc(sizeof(DoubleLinkedList));
+    dll->head = NULL;
+    dll->tail = NULL;
+    dll->numElems = 0;
+    dll->elemSize = elemSize;
+    dll->print = print;
+    return dll;
+}
+
+/* DeleteDoubleLinkedList(struct DoubleLinkedList* dll)
+ * Frees all of the memory associated with the double linked list.
+*/
+void DeleteDoubleLinkedList(DoubleLinkedList* dll) {
+    Node* current = dll->head;
+    Node* next;
+
+    while (current != NULL) {
+        next = current->next;
+        free(current->val);
+        free(current);
+        current = next;
+    }
+
+    free(dll);
+}
+
+/* Traverse(struct DoubleLinkedList* dll)
+ * Prints out each of the elements of the linked list.
+*/
+void Traverse(DoubleLinkedList* dll) {
+    if (dll->numElems == 0) {
+    	printf("List is empty\n");
+    }
+    Node* dll_iter = dll->head;
+    for (int i = 0; i < dll->numElems; i++) {
+        dll->print(dll_iter->val);
+        dll_iter = dll_iter->next;
+    }
+}
+
+/* Node* CreateNode(int value)
+ * Creates a node containing value
+*/
+Node* CreateNode(DoubleLinkedList* ll, void* val) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->val = malloc(ll->elemSize);
+    memcpy(newNode->val, val, ll->elemSize); 
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    return newNode;
+}
+
+/* InsertFirst(struct DoubleLinkedList* dll, int val)
+ * Inserts a new node with value val at the front of the double linked list.
+*/
+void InsertFirst(DoubleLinkedList* dll, void* val) {
+    Node* x = CreateNode(dll, val);
+    x->next = dll->head;
+    if (dll->head != NULL) {
+        dll->head->prev = x;
+    }
+    dll->head = x;
+    if (dll->numElems == 0) {
+        dll->tail = x;
+    }
+    dll->numElems++;
+}
+
+/* DeleteFirst(struct DoubleLinkedList* dll)
+ * Deletes the first element of the double linked list.
+*/
+void DeleteFirst(DoubleLinkedList* dll) {
+    if (dll->head != NULL) {
+        Node* temp = dll->head;
+        dll->head = dll->head->next;
+        if (dll->head != NULL) {
+            dll->head->prev = NULL;
+        } else {
+            dll->tail = NULL;
+        }
+        free(temp->val);
+        free(temp);
+        dll->numElems--;
+    }
+}
+
+/* InsertLast(struct DoubleLinkedList* dll, int val)
+ * Inserts a node with value val at the end of the double linked list.
+*/
+void InsertLast(DoubleLinkedList* dll, void* val) {
+    Node* x = CreateNode(dll, val);
+    x->next = NULL;
+    x->prev = dll->tail;
+    if (dll->tail != NULL) {
+        dll->tail->next = x;
+    }
+    dll->tail = x;
+    if (dll->numElems == 0) {
+        dll->head = x;
+    }
+    dll->numElems++;
+}
+
+/* DeleteLast(struct DoubleLinkedList* dll)
+ * Deletes the last element of the double linked list.
+*/
+void DeleteLast(DoubleLinkedList* dll) {
+    if (dll->tail != NULL) {
+        Node* temp = dll->tail;
+        dll->tail = dll->tail->prev;
+        if (dll->tail != NULL) {
+            dll->tail->next = NULL;
+        } else {
+            dll->head = NULL;
+        }
+        free(temp->val);
+        free(temp);
+        dll->numElems--;
+    }
+}
+
+/* GetAt(struct DoubleLinkedList* dll, int i)
+ * Gets the ith node in the double linked list.
+*/
+Node* GetAt(DoubleLinkedList* dll, int i) {
+    if (i < 0 || i >= dll->numElems) {
+    	return NULL;
+    }
+    
+    Node* dll_iter = dll->head;
+    for (int j = 0; j < i; j++) {
+        dll_iter = dll_iter->next;
+    }
+    return dll_iter;
+}
+
+/* InsertAt(struct DoubleLinkedList* dll, int val, int i)
+ * Inserts a node with value val as the ith node in the double linked list.
+*/
+void InsertAt(DoubleLinkedList* dll, void* val, int i) {
+    if (i == 0) {
+        InsertFirst(dll, val);
+        return;
+    }
+
+    Node* iter = dll->head;
+    for (int j = 0; j < i - 1; j++) {
+        iter = iter->next;
+    }
+
+	Node* x = CreateNode(dll, val);
+    x->next = iter->next;
+    x->prev = iter;
+    if (iter->next != NULL) {
+        iter->next->prev = x;
+    } else {
+        dll->tail = x;
+    }
+    iter->next = x;
+    dll->numElems++;
+}
+
+/* DeleteAt(struct DoubleLinkedList* dll, int i)
+ * Deletes the ith node of the double linked list.
+*/
+void DeleteAt(DoubleLinkedList* dll, int i) {
+    if (i == 0) {
+        DeleteFirst(dll);
+        return;
+    }
+
+    Node* iter = dll->head;
+    for (int j = 0; j < i - 1; j++) {
+        iter = iter->next;
+    }
+
+    Node* temp = iter->next;
+    iter->next = iter->next->next;
+    if (iter->next != NULL) {
+        iter->next->prev = iter;
+    } else {
+        dll->tail = iter;
+    }
+    free(temp->val);
+    free(temp);
+    dll->numElems--;
+}

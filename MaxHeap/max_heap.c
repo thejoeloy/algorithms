@@ -1,0 +1,136 @@
+/* max_heap.c
+ * This file contains an implementation of a max binary heap. A max binary heap
+ * satisfies the max heap property in which the children of a parent node are
+ * both smaller than their parent node. The root node of the heap is therefore
+ * the maximum value in the heap. The max binary heap can also be represented
+ * as a complete binary tree. However, the max binary heap is implicit in how
+ * this tree is represented, whilst an actual binary tree is explicit. This
+ * heap is able to perform in place sorting in O(nlg(n)). 
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+#include "max_heap.h"
+
+/* CreateMaxHeap(void* A, int size, int elemSize, int (*compare)(const void*, const void*),
+ * void(*print)(void*))
+ * Creates a max heap from the elements in A. Takes in a function pointer to a comparison function
+ * and a printing function that are used in the implementation.
+*/
+MaxHeap* CreateMaxHeap(void* A, int size, int elemSize, int (*compare)(const void*, const void*), void (*print)(const void*)) {
+	MaxHeap* heap = (MaxHeap*)malloc(sizeof(MaxHeap));
+	if (heap == NULL) {
+        perror("Failed to allocate MaxHeap");
+        exit(EXIT_FAILURE);
+    }
+    
+	heap->A = malloc(elemSize * size);
+	if (heap->A == NULL) {
+        perror("Failed to allocate heap array");
+        exit(EXIT_FAILURE);
+    }
+	
+	memcpy(heap->A, A, elemSize * size);
+	heap->elemSize = elemSize;
+	heap->length = size;
+	heap->size = size;
+	heap->compare = compare;
+	heap->print = print;
+	return heap;
+}
+
+/* DeleteMaxHeap(MaxHeap* heap)
+ * Deletes all of the memory associated with the max heap.
+*/
+void DeleteMaxHeap(MaxHeap* heap) {
+	free(heap->A);
+	free(heap);
+}
+
+/* MaxHeapParent(int i)
+ * Returns the parent of node i.
+*/
+int MaxHeapParent(int i) {
+	return (i - 1) / 2;
+}
+
+/* MaxHeapLeft(int i)
+ * Returns the index of the left child of element i.
+*/
+int MaxHeapLeft(int i) {
+	return 2 * i + 1;
+}
+
+/* MaxHeapRight(int i)
+ * Returns the index of the right child of element i.
+*/
+int MaxHeapRight(int i) {
+	return 2 * i + 2;
+}
+
+/* MaxHeapify(MaxHeap* heap, int i)
+ * Restores the max heap property of the heap at index i.
+*/
+void MaxHeapify(MaxHeap* heap, int i) {
+	int l = MaxHeapLeft(i);
+	int r = MaxHeapRight(i);
+	int largest;
+	
+	if (l < heap->size && heap->compare((char*)heap->A + (l * heap->elemSize), (char*)heap->A + (i * heap->elemSize)) > 0) {
+		largest = l;
+	}
+	else  {
+		largest = i;
+	}
+	
+	if (r < heap->size && heap->compare((char*)heap->A + (r * heap->elemSize), (char*)heap->A + (largest * heap->elemSize)) > 0) {
+		largest = r;
+	}
+	
+	if (largest != i) {
+		void* tmp = malloc(heap->elemSize);
+		memcpy(tmp, (char*)heap->A + (i * heap->elemSize), heap->elemSize);
+		memcpy((char*)heap->A + (i * heap->elemSize), (char*)heap->A + (largest * heap->elemSize), heap->elemSize);
+		memcpy((char*)heap->A + (largest * heap->elemSize), tmp, heap->elemSize);
+		free(tmp);
+		MaxHeapify(heap, largest); 
+	}
+}
+
+/* BuildMaxHeap(MaxHeap* heap)
+ * Restores the max heap property of the heap.
+*/
+void BuildMaxHeap(MaxHeap* heap) {
+	heap->size = heap->length;
+	
+	for (int i = heap->length / 2 - 1; i >= 0; i--) {
+		MaxHeapify(heap, i);
+	}
+}
+
+/* MaxHeapSort(MaxHeap* heap)
+ * Sorts the elements in the max heap in descending order.
+*/
+void MaxHeapSort(MaxHeap* heap) {
+	BuildMaxHeap(heap);
+	
+	for (int i = heap->length - 1; i >= 0; i--) {
+		void* tmp = malloc(heap->elemSize);
+		memcpy(tmp, heap->A, heap->elemSize);
+		memcpy(heap->A, (char*)heap->A + (i * heap->elemSize), heap->elemSize);
+		memcpy((char*)heap->A + (i * heap->elemSize), tmp, heap->elemSize);
+		free(tmp);
+		heap->size--;
+		MaxHeapify(heap, 0); 
+	}
+}
+
+/* MaxHeapPrint(MaxHeap* heap)
+ * Prints out the elements contained in the max heap in heap order.
+*/
+void MaxHeapPrint(MaxHeap* heap) {
+	for (int i = 0; i < heap->length; i++) {
+		heap->print((char*)heap->A + (i * heap->elemSize));
+	}
+}

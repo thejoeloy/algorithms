@@ -1,0 +1,137 @@
+/* min_heap.c
+ * This file contains an implementation of a min binary heap. A min binary heap
+ * satisfies the min heap property in which the children of a parent node are
+ * both larger than their parent node. The root node of the heap is therefore
+ * the minimum value in the heap. The min binary heap can also be represented
+ * as a complete binary tree. However, the min binary heap is implicit in how
+ * this tree is represented, whilst an actual binary tree is explicit. This
+ * heap is able to perform in place sorting in O(nlg(n)). 
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include "min_heap.h"
+
+/* CreateMinHeap(void* A, int size, int elemSize, int (*compare)(const void*, const void*),
+ * void(*print)(void*))
+ * Creates a min heap from the elements in A. Takes in a function pointer to a comparison function
+ * and a printing function that are used in the implementation.
+*/
+MinHeap* CreateMinHeap(void* A, int size, int elemSize, int (*compare)(const void*, const void*), void (*print)(const void*)) {
+	MinHeap* heap = (MinHeap*)malloc(sizeof(MinHeap));
+	if (heap == NULL) {
+        perror("Failed to allocate MinHeap");
+        exit(EXIT_FAILURE);
+    }
+    
+	heap->A = malloc(elemSize * size);
+	if (heap->A == NULL) {
+        perror("Failed to allocate heap array");
+        exit(EXIT_FAILURE);
+    }
+	
+	memcpy(heap->A, A, elemSize * size);
+	heap->elemSize = elemSize;
+	heap->length = size;
+	heap->size = size;
+	heap->compare = compare;
+	heap->print = print;
+	return heap;
+}
+
+/* DeleteMinHeap(MinHeap* heap)
+ * Deletes all of the memory associated with the min heap.
+*/
+void DeleteMinHeap(MinHeap* heap) {
+	free(heap->A);
+	free(heap);
+}
+
+/* MinHeapParent(int i)
+ * Returns the parent of node i.
+*/
+int MinHeapParent(int i) {
+	return (i - 1) / 2;
+}
+
+/* MinHeapLeft(int i)
+ * Returns the index of the left child of element i.
+*/
+int MinHeapLeft(int i) {
+	return 2 * i + 1;
+}
+
+/* MinHeapRight(int i)
+ * Returns the index of the right child of element i.
+*/
+int MinHeapRight(int i) {
+	return 2 * i + 2;
+}
+
+/* MinHeapify(MinHeap* heap, int i)
+ * Restores the min heap property of the heap at index i.
+*/
+void MinHeapify(MinHeap* heap, int i) {
+	int l = MinHeapLeft(i);
+	int r = MinHeapRight(i);
+	int smallest;
+	
+	if (l < heap->size && heap->compare((char*)heap->A + (l * heap->elemSize), (char*)heap->A + (i * heap->elemSize)) < 0) {
+		smallest = l;
+	}
+	else  {
+		smallest = i;
+	}
+	
+	if (r < heap->size && heap->compare((char*)heap->A + (r * heap->elemSize), (char*)heap->A + (smallest * heap->elemSize)) < 0) {
+		smallest = r;
+	}
+	
+	if (smallest != i) {
+		void* tmp = malloc(heap->elemSize);
+		memcpy(tmp, (char*)heap->A + (i * heap->elemSize), heap->elemSize);
+		memcpy((char*)heap->A + (i * heap->elemSize), (char*)heap->A + (smallest * heap->elemSize), heap->elemSize);
+		memcpy((char*)heap->A + (smallest * heap->elemSize), tmp, heap->elemSize);
+		
+		free(tmp);
+		MinHeapify(heap, smallest); 
+	}
+}
+
+/* BuildMinHeap(MinHeap* heap)
+ * Restores the min heap property of the heap.
+*/
+void BuildMinHeap(MinHeap* heap) {
+	heap->size = heap->length;
+	
+	for (int i = heap->length / 2 - 1; i >= 0; i--) {
+		MinHeapify(heap, i);
+	}
+}
+
+/* MinHeapSort(MinHeap* heap)
+ * Sorts the elements in the min heap in ascending order.
+*/
+void MinHeapSort(MinHeap* heap) {
+	BuildMinHeap(heap);
+	
+	for (int i = heap->length - 1; i >= 0; i--) {
+		void* tmp = malloc(heap->elemSize);
+		memcpy(tmp, heap->A, heap->elemSize);
+		memcpy(heap->A, (char*)heap->A + (i * heap->elemSize), heap->elemSize);
+		memcpy((char*)heap->A + (i * heap->elemSize), tmp, heap->elemSize);
+		free(tmp);
+		heap->size--;
+		MinHeapify(heap, 0); 
+	}
+}
+
+/* MinHeapPrint(MinHeap* heap)
+ * Prints out the elements contained in the min heap in heap order.
+*/
+void MinHeapPrint(MinHeap* heap) {
+	for (int i = 0; i < heap->length; i++) {
+		heap->print((char*)heap->A + (i * heap->elemSize));
+	}
+}

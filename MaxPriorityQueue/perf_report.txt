@@ -1,0 +1,36 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 66  of event 'cycles:P'
+# Event count (approx.): 77833068
+#
+# Overhead  Command          Shared Object            Symbol                   
+# ........  ...............  .......................  .........................
+#
+    47.67%  max_priority_qu  libc.so.6                [.] __mcount_internal
+     7.94%  max_priority_qu  libc.so.6                [.] __random
+     7.05%  max_priority_qu  max_priority_queue_test  [.] MaxHeapify
+     6.58%  max_priority_qu  max_priority_queue_test  [.] MaxHeapIncreaseKey
+     4.29%  max_priority_qu  max_priority_queue_test  [.] TestLarge
+     4.04%  max_priority_qu  max_priority_queue_test  [.] IntCompare
+     4.02%  max_priority_qu  [kernel.kallsyms]        [k] do_anonymous_page
+     3.91%  max_priority_qu  libc.so.6                [.] _mcount
+     2.44%  max_priority_qu  [kernel.kallsyms]        [k] do_mmap
+     2.05%  max_priority_qu  max_priority_queue_test  [.] MaxHeapRight
+     1.79%  max_priority_qu  libc.so.6                [.] _int_free
+     1.48%  max_priority_qu  [kernel.kallsyms]        [k] _nv041513rm
+     1.40%  max_priority_qu  libc.so.6                [.] cfree@GLIBC_2.2.5
+     1.39%  max_priority_qu  [kernel.kallsyms]        [k] unmap_region
+     1.27%  max_priority_qu  [kernel.kallsyms]        [k] ata_scsi_rw_xlat
+     1.27%  max_priority_qu  libc.so.6                [.] __vfprintf_internal
+     1.27%  max_priority_qu  max_priority_queue_test  [.] MaxHeapInsert
+     0.14%  perf-exec        [kernel.kallsyms]        [k] perf_iterate_ctx
+     0.01%  perf-exec        [kernel.kallsyms]        [k] native_apic_msr_write
+     0.00%  perf-exec        [kernel.kallsyms]        [k] native_write_msr
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#
